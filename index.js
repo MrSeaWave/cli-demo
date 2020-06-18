@@ -5,7 +5,7 @@ const resolveFrom = require("resolve-from").silent; // 类似 require，但支�
 const requireFrom = require("import-from").silent; // require.resolve
 const yeomanEnv = require("yeoman-environment").createEnv(); // 【核心】用于执行一个「模板插件包」
 const inquirer = require("inquirer"); // 询问用户并记录反馈结果，界面互动的神器
-const mkdirp = require("mkdirp"); // 跨平台创建包
+const mkdirp = require("mkdirp").sync; // 跨平台创建包
 const execSync = require("child_process").execSync;
 const minimist = require("minimist"); // 解析用户命令，将 process.argv 解析成对象
 
@@ -54,7 +54,9 @@ class Main extends Utils {
     const { name, version } = pkg;
     const latestVersion = String(
       execSync(`npm view ${name} version --json --registry=https://registry.npm.taobao.org`)
-    );
+    )
+      .trim()
+      .replace(/"/g, "");
     if (latestVersion !== version) {
       this.console(
         `cli 版本过旧，建议执行 npm i -g ${name}@latest 升级 cli: ${version}--->${latestVersion}`

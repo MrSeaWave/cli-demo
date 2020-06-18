@@ -12,7 +12,10 @@ class Utils {
     if (!dependencies[pkgName]) return 0;
     const latestVersion = String(
       execSync(`npm view ${pkgName} version --json --registry=https://registry.npm.taobao.org`)
-    );
+    )
+      .trim()
+      .replace(/"/g, "");
+
     // 类似 require，但支持指定目录，让你可以跨工程目录进行 require，比如全局包想引用工程路径下的内容
     const current = this.requireFrom(targetDir, path.join(pkgName, "package.json")).version;
     if (latestVersion === current) return 2;
