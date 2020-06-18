@@ -7,6 +7,7 @@ const yeomanEnv = require("yeoman-environment").createEnv(); // 【核心】用�
 const inquirer = require("inquirer"); // 询问用户并记录反馈结果，界面互动的神器
 const mkdirp = require("mkdirp"); // 跨平台创建包
 const execSync = require("child_process").execSync;
+const minimist = require("minimist"); // 解析用户命令，将 process.argv 解析成对象
 
 const homeDir = require("osenv").home(); // 跨平台的系统信息
 const tplDir = path.resolve(homeDir, ".demo-tpl-cache");
@@ -14,6 +15,8 @@ const cmdDirName = "scripts";
 
 const Utils = require("./utils");
 const pkg = require("./package.json");
+
+const args = minimist(process.argv);
 
 class Main extends Utils {
   constructor(args) {
@@ -86,3 +89,5 @@ class Main extends Utils {
     console.log(fn(data));
   }
 }
+
+module.exports = new Main(args);
