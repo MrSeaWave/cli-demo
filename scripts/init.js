@@ -28,8 +28,8 @@ module.exports = async function() {
   }
 
   this.yeomanEnv.register(this.resolveFrom(this.dir.tpl, pkgName), pkgName);
-  this.yeomanEnv.run(pkgName, (e, d) => {
-    this.console(`运行结果：${d}`);
-    d && this.console(`创建项目成功🎉🎉🎉🎉🎉🎉`, "green");
+  this.yeomanEnv.run(pkgName, (e) => {
+    // this.console(`运行结果：${e}`);
+    !e && this.console(`创建项目成功🎉🎉🎉🎉🎉🎉`, "green");
   });
 };
